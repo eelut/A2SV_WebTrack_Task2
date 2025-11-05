@@ -1,0 +1,129 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --white: #fafafa;
+  --black: #1b1212;
+  --blackHover:#555;
+  --unactive:#616161;
+  --active:#181818;
+
+  /* --text-color: #333333;
+  --text-muted: #999999; */
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--white);
+  color:var(--black);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.container {
+  background-color:var(--white);
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--black);
+}
+
+#progressBar {
+  background:var(--white);
+  border-radius: 10px;
+  height: 10px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+#progress {
+  height: 10px;
+  border-radius: 10px;
+  width: 0%;
+  background-color: var(--black);
+  transition: width 0.3s ease;
+}
+
+#numbers {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--black);
+}
+
+form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+input[type="text"] {
+  flex: 1;
+  padding: 14px 16px;
+  border: 1px solid var(--unactive);
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+input[type="text"]:focus {
+  border-color: var(--active);
+}
+
+
+button {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--unactive);
+  color: var(--white);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color:var(--active);
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 30px 20px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    width: 44px;
+    height: 44px;
+  }
+
+   .taskItem input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+  }
+}
