@@ -13,6 +13,7 @@ const numbers = document.getElementById(
 ) as HTMLParagraphElement | null;
 
 const KEY = "simpleTodoWithTypescript";
+const uid = () => Math.random().toString(36).slice(2, 9);
 
 const save = (tasks: Todo[]) =>
   localStorage.setItem(KEY, JSON.stringify(tasks));
@@ -57,7 +58,7 @@ function render() {
       const editImg = document.createElement("img");
       editImg.width = 48;
       editImg.height = 48;
-      editImg.src = "https://img.icons8.com/sf-regular/48/create-new.png" ;
+      editImg.src = "https://img.icons8.com/sf-regular/48/create-new.png";
       editImg.alt = "Edit task";
       editButton.appendChild(editImg);
       editButton.addEventListener("click", () => {
@@ -80,20 +81,44 @@ function render() {
           { once: true }
         ); //not the same thing to be called multiple times;
       });
-      const deleteButton=document.createElement("button");
-      const deleteImg=document.createElement("img");
-      deleteImg.width=48;
-      deleteImg.height=48;
-      deleteImg.src="https://img.icons8.com/material/24/filled-trash.png" ;
+      const deleteButton = document.createElement("button");
+      const deleteImg = document.createElement("img");
+      deleteImg.width = 48;
+      deleteImg.height = 48;
+      deleteImg.src = "https://img.icons8.com/material/24/filled-trash.png";
       deleteButton.appendChild(deleteImg);
-      deleteButton.addEventListener("click",()=>{
-        tasks.filter((t)=>t.id!=task.id);
+      deleteButton.addEventListener("click", () => {
+        tasks.filter((t) => t.id != task.id);
         save(tasks);
         render();
       });
-      li.append(checkbox,span,editButton,deleteButton);
+      li.append(checkbox, span, editButton, deleteButton);
       list.appendChild(li);
     });
   }
   updateProgress();
+}
+
+function addTask(text: string) {
+  const trimmed = text.trim();
+  if (trimmed == "") return;
+  tasks.unshift({ id: uid(), text: trimmed, done: false });
+  save(tasks);
+  render();
+}
+
+if (addBtn && input) {
+  addBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    addTask(input.value);
+    input.value = "";
+    input.focus();
+  });
+  input.addEventListener("keydown", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+      addTask(input.value);
+      input.value = "";
+    }
+  });
 }
