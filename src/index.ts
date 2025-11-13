@@ -130,3 +130,7 @@ if (addBtn && input) {
     }
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  render();
+});
