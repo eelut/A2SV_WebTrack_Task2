@@ -25,17 +25,17 @@ The project demonstrates the use of:
 
 ---
 
-##Technologies Used
+## Technologies Used
 
-#HTML
-#CSS
-#TypeScript
+# HTML
+# CSS
+# TypeScript
 
 ---
 
 ## Screenshots
-![Screenshot1](.src/image/ScreenShot1.png)
-![Screenshot2](.src/image/ScreenShot2.png)
+![Screenshot1](./src/image/ScreenShot1.png)
+![Screenshot2](./src/image/ScreenShot2.png)
 
 ---
 
