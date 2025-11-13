@@ -4,6 +4,7 @@ interface Todo {
   done: boolean;
 }
 
+const form = document.getElementById("todoForm") as HTMLFormElement | null;
 const input = document.getElementById("taskInput") as HTMLInputElement | null;
 const addBtn = document.getElementById("newTask") as HTMLButtonElement | null;
 const list = document.getElementById("taskList") as HTMLUListElement | null;
@@ -14,6 +15,15 @@ const numbers = document.getElementById(
 
 const KEY = "simpleTodoWithTypescript";
 const uid = () => Math.random().toString(36).slice(2, 9);
+
+form?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (input) {
+    addTask(input.value);
+    input.value = "";
+    input.focus();
+  }
+});
 
 const save = (tasks: Todo[]) =>
   localStorage.setItem(KEY, JSON.stringify(tasks));
@@ -35,32 +45,30 @@ function updateProgress() {
 
 function render() {
   if (!list || !progress || !numbers) return;
+  list.innerHTML = "";
+
   if (tasks.length != 0) {
     tasks.forEach((task) => {
       const li = document.createElement("li");
       li.className = "taskItem";
+
       const span = document.createElement("span");
       span.textContent = task.text;
+      span.style.textDecoration = task.done ? "line-through" : "none";
+
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.checked = task.done;
       checkbox.addEventListener("change", () => {
         task.done = checkbox.checked;
         save(tasks);
-        if (task.done) {
-          span.style.textDecoration = "line-through";
-        } else {
-          span.style.textDecoration = "none";
-        }
+        span.style.textDecoration = task.done ? "line-through" : "none";
         updateProgress();
       });
+
       const editButton = document.createElement("button");
-      const editImg = document.createElement("img");
-      editImg.width = 48;
-      editImg.height = 48;
-      editImg.src = "https://img.icons8.com/sf-regular/48/create-new.png";
-      editImg.alt = "Edit task";
-      editButton.appendChild(editImg);
+      editButton.className= "editBtn";
+      editButton.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
       editButton.addEventListener("click", () => {
         span.contentEditable = "true";
         span.focus();
@@ -81,17 +89,16 @@ function render() {
           { once: true }
         ); //not the same thing to be called multiple times;
       });
+
       const deleteButton = document.createElement("button");
-      const deleteImg = document.createElement("img");
-      deleteImg.width = 48;
-      deleteImg.height = 48;
-      deleteImg.src = "https://img.icons8.com/material/24/filled-trash.png";
-      deleteButton.appendChild(deleteImg);
+      deleteButton.className= "deleteBtn";
+      deleteButton.innerHTML = '<i style="width:32,height:32"class="fa-solid fa-trash"></i>';
       deleteButton.addEventListener("click", () => {
-        tasks.filter((t) => t.id != task.id);
+        tasks = tasks.filter((t) => t.id != task.id);
         save(tasks);
         render();
       });
+
       li.append(checkbox, span, editButton, deleteButton);
       list.appendChild(li);
     });
@@ -119,6 +126,7 @@ if (addBtn && input) {
       e.preventDefault();
       addTask(input.value);
       input.value = "";
+      input.focus();
     }
   });
 }
