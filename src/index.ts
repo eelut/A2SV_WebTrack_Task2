@@ -33,6 +33,7 @@ const load = (): Todo[] => {
   return raw ? (JSON.parse(raw) as Todo[]) : [];
 };
 let tasks: Todo[] = load();
+render();
 
 function updateProgress() {
   if (!progress || !numbers) return;
@@ -130,7 +131,3 @@ if (addBtn && input) {
     }
   });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  render();
-});
